@@ -20,9 +20,10 @@ void UOpenDoor::BeginPlay()
 {
 	Super::BeginPlay();
 
-	GetOwner()->GetActorRotation();
+	FRotator OpenDoor = FRotator(0.0f, -200.0f, 0.0f);
 
-	float MyNumber = 0.5f
+	GetOwner()->SetActorRotation(OpenDoor);
+
 	
 }
 
