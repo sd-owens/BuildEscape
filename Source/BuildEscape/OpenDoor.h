@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Engine/TriggerVolume.h"
 #include "OpenDoor.generated.h"
 
 
@@ -29,5 +30,13 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	float TargetYaw = 90.0f;
-		
+
+	UPROPERTY(EditAnywhere)
+	ATriggerVolume* PressurePlate; 
+
+	// UPROPERTY(EditAnywhere)
+	AActor* ActorThatOpens;	
+
+	void OpenDoor(float DelatTime);
+	void InitializeYawToRelative();
 };

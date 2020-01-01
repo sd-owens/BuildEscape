@@ -20,22 +20,19 @@ void UOpenDoor::BeginPlay()
 {
 	Super::BeginPlay();
 
-	InitialYaw = GetOwner()->GetActorRotation().Yaw;
-	CurrentYaw = InitialYaw;
-	TargetYaw += InitialYaw;
+	InitializeYawToRelative();
 
+	ActorThatOpens = GetWorld()->GetFirstPlayerController()->GetPawn();
+	
 	
 }
 
+void UOpenDoor::OpenDoor(float DeltaTime) {
 
-// Called every frame
-void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	UE_LOG(LogTemp, Warning, TEXT("Yaw is: %f"), GetOwner()->GetActorRotation().Yaw);
+	// AActor* Owner = GetOwner();
 
 	CurrentYaw = FMath::Lerp(CurrentYaw, TargetYaw, 1.0f * DeltaTime);
+
 	FRotator DoorRotation = GetOwner()->GetActorRotation();
 	DoorRotation.Yaw = CurrentYaw;
 	GetOwner()->SetActorRotation(DoorRotation);
@@ -43,3 +40,31 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 
 }
 
+// Called every frame
+void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	// UE_LOG(LogTemp, Warning, TEXT("Yaw is: %f"), GetOwner()->GetActorRotation().Yaw);
+
+	// Need to get AActor and pass into function.
+
+
+	// Poll the Trigger Volume
+	// If the ActorThatOpens is in the volume
+	if(PressurePlate && PressurePlate->IsOverlappingActor(ActorThatOpens))   // checks for null assigned to PressurePlate
+	{
+		OpenDoor(DeltaTime);
+	}
+	
+	
+
+}
+
+
+void UOpenDoor::InitializeYawToRelative() {
+
+	InitialYaw = GetOwner()->GetActorRotation().Yaw;
+	CurrentYaw = InitialYaw;
+	TargetYaw += InitialYaw;
+}
