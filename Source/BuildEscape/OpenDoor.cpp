@@ -39,9 +39,13 @@ void UOpenDoor::OpenDoor(float DeltaTime) {
 
 }
 
-void UOpenDoor::CloseDoor() {
+void UOpenDoor::CloseDoor(float DeltaTime) {
 
+	CurrentYaw = FMath::Lerp(CurrentYaw, InitialYaw, 1.0f * DeltaTime);
 
+	FRotator DoorRotation = Owner->GetActorRotation();
+	DoorRotation.Yaw = CurrentYaw;
+	Owner->SetActorRotation(DoorRotation);
 	
 }
 
@@ -64,7 +68,12 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 	}
 	
 	// Check if its time to close the door
-	
+
+	CurrentTime = GetWorld()->GetTimeSeconds();
+
+	if(CurrentTime - LastDoorOpenTime > DoorCloseDelay) {
+		CloseDoor(DeltaTime);
+	}
 
 }
 

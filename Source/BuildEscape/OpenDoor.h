@@ -37,12 +37,13 @@ public:
 	UPROPERTY(EditAnywhere)
 	float DoorCloseDelay = 1.f;
 
+	float CurrentTime;
 	float LastDoorOpenTime;
 
 	AActor* ActorThatOpens;	// Pawn inherits from actor
 	AActor* Owner; // The owning door
 
 	void OpenDoor(float DelatTime);
-	void CloseDoor();
+	void CloseDoor(float DeltaTime);
 	void InitializeYawToRelative();
 };
