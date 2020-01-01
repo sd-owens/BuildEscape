@@ -34,9 +34,15 @@ public:
 	UPROPERTY(EditAnywhere)
 	ATriggerVolume* PressurePlate; 
 
-	// UPROPERTY(EditAnywhere)
-	AActor* ActorThatOpens;	
+	UPROPERTY(EditAnywhere)
+	float DoorCloseDelay = 1.f;
+
+	float LastDoorOpenTime;
+
+	AActor* ActorThatOpens;	// Pawn inherits from actor
+	AActor* Owner; // The owning door
 
 	void OpenDoor(float DelatTime);
+	void CloseDoor();
 	void InitializeYawToRelative();
 };
