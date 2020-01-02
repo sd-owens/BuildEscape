@@ -13,37 +13,48 @@ class BUILDESCAPE_API UOpenDoor : public UActorComponent
 {
 	GENERATED_BODY()
 
-public:	
-	// Sets default values for this component's properties
-	UOpenDoor();
+private:
+
+	// Vars for Opening door with relative Yaw
+	float InitialYaw;
+	float CurrentYaw;
+
+	// Vars for Closing door
+	float CurrentTime;
+	float LastDoorOpenTime;
+
+	// Vars for opening with PressurePlate
+	AActor* ActorThatOpens;	// Pawn inherits from actor
+	AActor* Owner; // The owning door
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
 public:	
+	// Sets default values for this component's properties
+	UOpenDoor();  // Constructor
+
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-	float InitialYaw;
-	float CurrentYaw;
+	void OpenDoor(float DelatTime);
+	void CloseDoor(float DeltaTime);
+	void InitializeYawToRelative();
 
 	UPROPERTY(EditAnywhere)
 	float TargetYaw = 90.0f;
 
 	UPROPERTY(EditAnywhere)
-	ATriggerVolume* PressurePlate; 
-
-	UPROPERTY(EditAnywhere)
 	float DoorCloseDelay = 1.f;
 
-	float CurrentTime;
-	float LastDoorOpenTime;
-
-	AActor* ActorThatOpens;	// Pawn inherits from actor
-	AActor* Owner; // The owning door
-
-	void OpenDoor(float DelatTime);
-	void CloseDoor(float DeltaTime);
-	void InitializeYawToRelative();
+	UPROPERTY(EditAnywhere)
+	ATriggerVolume* PressurePlate; 
+	
 };
+	
+
+	
+
+	
+
+	

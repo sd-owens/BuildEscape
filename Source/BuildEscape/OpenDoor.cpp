@@ -27,6 +27,13 @@ void UOpenDoor::BeginPlay()
 	
 }
 
+void UOpenDoor::InitializeYawToRelative() {
+
+	InitialYaw = GetOwner()->GetActorRotation().Yaw;
+	CurrentYaw = InitialYaw;
+	TargetYaw += InitialYaw;
+}
+
 void UOpenDoor::OpenDoor(float DeltaTime) {
 
 
@@ -77,10 +84,3 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 
 }
 
-
-void UOpenDoor::InitializeYawToRelative() {
-
-	InitialYaw = GetOwner()->GetActorRotation().Yaw;
-	CurrentYaw = InitialYaw;
-	TargetYaw += InitialYaw;
-}
